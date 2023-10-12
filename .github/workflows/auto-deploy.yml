@@ -1,8 +1,10 @@
 name: build
 on:
   push:
-    paths: [ '*/**' ]
-    branches: [ $default-branch ]
+    paths:
+      - '*/**'
+    branches:
+      - main
 
 jobs:
   build:
