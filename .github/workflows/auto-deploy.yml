@@ -31,7 +31,7 @@ jobs:
       - name: Setup SSH
         run: |
           eval $(ssh-agent -s)
-          ssh-add < (echo "${{ secrets.PRIVATE_KEY }}")
+          ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           ssh deploy@52.224.246.238 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
       - name: Check Deployment Status
         run: |
