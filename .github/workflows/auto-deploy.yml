@@ -34,6 +34,7 @@ jobs:
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           ls -la /home/runner/work/autodeploy2server
           ssh deploy@52.224.246.238 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < ../deploy-container.sh
+        working-directory: ./
       - name: Check Deployment Status
         run: |
           if [ $? -ne 0 ]; then
