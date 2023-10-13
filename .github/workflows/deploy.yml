@@ -15,7 +15,6 @@ jobs:
       name: 'PROD'
     steps:
       - name: Setup SSH
-        working-directory: scripts/
         run: |
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
