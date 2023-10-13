@@ -15,7 +15,7 @@ def index():
         time = now.strftime("%H:%M:%S")
         return render_template('index.html', hostname=host_name, ip=host_ip, time=time)
     except:
-        return render_template('error.html')
+        return render_template('error.html', time=time)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
