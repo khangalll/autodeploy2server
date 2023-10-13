@@ -14,8 +14,8 @@ jobs:
     environment:
       name: 'PROD'
     steps:
+      - uses: actions/checkout@v3
       - name: Setup SSH
-        uses: actions/checkout@v3
         run: |
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
