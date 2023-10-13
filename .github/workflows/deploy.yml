@@ -15,16 +15,18 @@ jobs:
       name: 'PROD'
     steps:
       - name: Setup SSH
+        uses: actions/checkout@v3
         run: |
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           mkdir -p /home/runner/.ssh && chmod 700 ~/.ssh
-          ssh-keyscan 52.224.246.238 >> ~/.ssh/known_hosts
+          ssh-keyscan $HOST_ADDRESS >> ~/.ssh/known_hosts
           ls -la /home/runner && ls -la /home/runner/.ssh
-          ssh deploy@52.224.246.238
-      # - name: Check Deployment Status
-      #   run: |
-      #     if [ $? -ne 0 ]; then
-      #       echo "Deployment failed"
-      #       exit 1
-      #     fi
+          ssh $USER@$HOST_ADDRESS 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
+        working-directory: scripts/
+      - name: Check Deployment Status
+        run: |
+          if [ $? -ne 0 ]; then
+            echo "Deployment failed"
+            exit 1
+          fi
