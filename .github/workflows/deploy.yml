@@ -18,8 +18,9 @@ jobs:
         run: |
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
+          mkdir -p /home/runner/.ssh && chmod 700 ~/.ssh
           ssh-keyscan 52.224.246.238 >> ~/.ssh/known_hosts
-          ls -la && pwd
+          ls -la /home/runner && ls -la /home/runner/.ssh
           ssh deploy@52.224.246.238
       # - name: Check Deployment Status
       #   run: |
