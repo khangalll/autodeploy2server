@@ -20,9 +20,9 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           mkdir -p /home/runner/.ssh && chmod 700 ~/.ssh
-          ssh-keyscan ${{ env.HOST_NAME }} >> ~/.ssh/known_hosts
+          ssh-keyscan ${{ vars.HOST_NAME }} >> ~/.ssh/known_hosts
           ls -la /home/runner && ls -la /home/runner/.ssh
-          ssh ${{ env.USER }}@${{ env.HOST_NAME }} 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
+          ssh ${{ vars.USER }}@${{ vars.HOST_NAME }} 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
         working-directory: scripts/
       - name: Check Deployment Status
         run: |
