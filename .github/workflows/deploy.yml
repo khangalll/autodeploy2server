@@ -1,4 +1,4 @@
-name: build
+name: deploy
 on:
   push:
     paths:
@@ -20,7 +20,7 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           ls -la && pwd
-          ssh deploy@52.224.246.238 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
+          ssh deploy@52.224.246.238 'touch github-action.test'
       - name: Check Deployment Status
         run: |
           if [ $? -ne 0 ]; then
