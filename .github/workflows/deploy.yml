@@ -1,8 +1,6 @@
 name: deploy
 on:
   push:
-    paths:
-      - '*/**'
     branches:
       - main
 
@@ -10,7 +8,7 @@ jobs:
   deploy:
     name: Deploy to server
     runs-on: ubuntu-latest
-    # needs: build
+    needs: build
     environment:
       name: 'PROD'
     steps:
@@ -21,7 +19,6 @@ jobs:
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           mkdir -p /home/runner/.ssh && chmod 700 ~/.ssh
           ssh-keyscan ${{ vars.HOST_ADDRESS }} >> ~/.ssh/known_hosts
-          ls -la /home/runner && ls -la /home/runner/.ssh
           ssh ${{ vars.USER }}@${{ vars.HOST_ADDRESS }} 'export GHCR_USERNAME=${{ github.repository_owner }} GHCR_TOKEN=${{ secrets.GITHUB_TOKEN }}; bash -s' < deploy-container.sh
         working-directory: scripts/
       - name: Check Deployment Status
