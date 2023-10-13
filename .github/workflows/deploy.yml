@@ -1,10 +1,10 @@
 name: deploy
 on:
-  push:
-    paths:
-      - '*/**'
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
 
 jobs:
   deploy:
