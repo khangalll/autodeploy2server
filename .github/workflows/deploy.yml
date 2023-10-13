@@ -20,10 +20,10 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.PRIVATE_KEY }}")
           ls -la && pwd
-          ssh deploy@52.224.246.238 'touch github-action.test'
-      - name: Check Deployment Status
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "Deployment failed"
-            exit 1
-          fi
+          ssh deploy@52.224.246.238
+      # - name: Check Deployment Status
+      #   run: |
+      #     if [ $? -ne 0 ]; then
+      #       echo "Deployment failed"
+      #       exit 1
+      #     fi
